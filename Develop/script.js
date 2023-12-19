@@ -27,14 +27,23 @@ $(function () {
   // time-block containing the button that was clicked? How might the id be
   // useful when saving the description in local storage?
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+  // Basically how this function works
+  // When the save button is clicked, the code looks at the id of the parent element
+  // (that id is then saved under hour. It'll be the key that'll be used to retrieve the different data sets)
+  // Also when the button is clicked, the code will grab the value of the text in the .description class (the <textarea>) of that id
+  // this string will then be saved with the variable description
+  // these two variables are then saved into the local storage
+  // the description is stored with the key hour
 
-  //Basically how this function works
-  //When the save button is clicked, the code looks at the id of the parent element
-  //(that id is then saved under hour. It'll be the key that'll be used to retrieve the different data sets)
-  //Also when the button is clicked, the code will grab the value of the text in the .description class (the <textarea>)
-  //this string will then be saved with the variable description
-  //these two variables are then saved into the local storage
-  //the key 'hour' 
+  // how it works with an analogy. It makes sense in my head but i'm having a hard time writing it down
+  // when the save button on row 9am is clicked, a key is created labeled '9' 
+  // the program looks at what is in the <textarea> of <div id='9'> and saves that text/string
+  // that string is put into a symbolic box that can only be accessed with the '9 key'
+  // when I change the text in row 9am, the code will take 'key 9' unlock, the box, remove the string, and place the new string into the box
+
+  //each <div> gets it's own key made for it that unlocks it's coresponding box.
+
   function setDescription(){
     //goes to the parent of the clicked button than selects the attribute which is the id
     //example, click the save button for the row 9am, get's the data in row 9am and stores that in 'hour'
@@ -58,7 +67,7 @@ $(function () {
 
   }
   
-
+// the click event to set each description
   $(".saveBtn").on("click", setDescription);
   
 
@@ -69,8 +78,17 @@ $(function () {
   // past, present, and future classes? How can Day.js be used to get the
   // current hour in 24-hour time?
 
+
+    //this for loop is set up as 9-18 because that represents the hours in 24hr time. (ie 9am-5pm)
        for(var i = 9; i<18; i++){
-        var calenderHour = $('#'+i+' .hour').text();
+        //I changed the Ids in the html to just be a number so it would make it easier for this for loop to select the correct id
+        //this grabs the text that is in that <div> with the id of i 
+        var calenderHour = $('#'+i).text();
+
+
+        console.log(calenderHour+" calenderHour value");
+
+
         var calenderHourInt = parseInt(calenderHour);
         if (calenderHour.includes('PM') && calenderHourInt != 12) { 
           calenderHourInt += 12;
