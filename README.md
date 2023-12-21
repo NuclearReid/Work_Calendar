@@ -39,4 +39,7 @@ I originally have each div class be colored for the future but then I check it a
 
 Now I just need to compare my int to the current time. less? I set the class to past. Equal? I set the class to present. I don't worry about checking if it's greater cause every class is listed as future from the get go.
 
+An example of what the application will look like when it's 12:08pm
+![what the application looks like](./Assets/images/Screenshot%202023-12-21%20120815.png)
+
 
