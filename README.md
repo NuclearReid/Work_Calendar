@@ -1,99 +1,42 @@
 # 05 Third-Party APIs: Work Day Scheduler
 
-## Your Task
+In this project, I have created a simple work calendar/planner. The calendar has the current day at the top and depending on the current time, the hour row will be gray (in the past), red (present), or green(in the future). The user can type in the row, and click the save button. Their input will be stored in the local memory and will be displayed when the page is refreshed.
 
-Create a simple calendar application that allows a user to save events for each hour of a typical working day (9am&ndash;5pm) by modifying starter code. This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery.
 
-You'll need to use the [Day.js](https://day.js.org/en/) library to work with date and time. Be sure to read the documentation carefully and concentrate on using Day.js in the browser.
+## Basics on how this application works
 
-## User Story
 
-```md
-AS AN employee with a busy schedule
-I WANT to add important events to a daily planner
-SO THAT I can manage my time effectively
-```
+### Setting the local storage
+How the save button/setting the local storage works: When the user puts text in the row and then clicks the save button, I look at the button's parent id and set that as a variable. 
 
-## Acceptance Criteria
+Then I look in the  < textarea >  and see if the user put anything in it. This is accomplished by looking at the siblings of the button that have the class '.description' and I get it's data by using .val();
 
-```md
-GIVEN I am using a daily planner to create a schedule
-WHEN I open the planner
-THEN the current day is displayed at the top of the calendar
-WHEN I scroll down
-THEN I am presented with timeblocks for standard business hours of 9am&ndash;5pm
-WHEN I view the timeblocks for that day
-THEN each timeblock is color coded to indicate whether it is in the past, present, or future
-WHEN I click into a timeblock
-THEN I can enter an event
-WHEN I click the save button for that timeblock
-THEN the text for that event is saved in local storage
-WHEN I refresh the page
-THEN the saved events persist
-```
+I then store both of these variables in the local storage with the 'parent id' as the key and the description.val() as the data/string stored.
 
-The following animation demonstrates the application functionality:
 
-<!-- @TODO: create ticket to review/update image) -->
-![A user clicks on slots on the color-coded calendar and edits the events.](./Assets/05-third-party-apis-homework-demo.gif)
+### Getting the data from the local storage
 
-## Grading Requirements
+When the page loads, I run a loop looking for each class called '.time-block', then look for the 'id' of the < div > with the .time-block class and store this as a variable. 
 
-> **Note**: If a Challenge assignment submission is marked as “0”, it is considered incomplete and will not count towards your graduation requirements. Examples of incomplete submissions include the following:
->
-> * A repository that has no code
->
-> * A repository that includes a unique name but nothing else
->
-> * A repository that includes only a README file but nothing else
->
-> * A repository that only includes starter code
+I then create a variable that gets the string that was stored under that id from the local storage.
 
-This Challenge is graded based on the following criteria:
+Next I use the .find() method to search for anything with class="description" (all of the < textarea >) and I set the text of that < textarea > to the string that was stored in local storage under  the Id of that section.
 
-### Technical Acceptance Criteria: 40%
 
-* Satisfies all of the above acceptance criteria plus the following:
+### How I update my colors
 
-  * Uses a date utility library to work with date and time
+To start with, I changed the id of each time block to just be 9, 10, 11, 12 etc. This made it easier to work with my for loop.
 
-### Deployment: 32%
+In the loop, I target each id and look for the text within it with '.text()'. This is easy because the only text in each < div > is the time.
 
-* Application deployed at live URL
+Once I have that string, I convert it into an int with '.parseInt()'
 
-* Application loads with no errors
+Now I need to convert that int from 12 hour time to 24 hour time. To accomplish this, I just looked to see if there was ('PM') in the original string data I grabbed at the start and if there is a 'pm' then I just added 12 hours to the int  I created. The only exception was if it was 12pm. (If I didn't exclude 12 then it would make 12pm be midnight).
 
-* Application GitHub URL submitted
+Now that I have the calendar's times, I used 'dayjs()' to get the current time. 
 
-* GitHub repo contains application code
+I originally have each div class be colored for the future but then I check it all to see if it is in the future, present or past.
 
-### Application Quality: 15%
+Now I just need to compare my int to the current time. less? I set the class to past. Equal? I set the class to present. I don't worry about checking if it's greater cause every class is listed as future from the get go.
 
-* Application user experience is intuitive and easy to navigate
 
-* Application user interface style is clean and polished
-
-* Application resembles the mock-up functionality provided in the Challenge instructions
-
-### Repository Quality: 13%
-
-* Repository has a unique name
-
-* Repository follows best practices for file structure and naming conventions
-
-* Repository follows best practices for class/id naming conventions, indentation, quality comments, etc.
-
-* Repository contains multiple descriptive commit messages
-
-* Repository contains quality README file with description, screenshot, and link to deployed application
-
-## Review
-
-You are required to submit the following for review:
-
-* The URL of the deployed application
-
-* The URL of the GitHub repository, with a unique name and a README describing the project
-
-- - -
-© 2023 edX Boot Camps LLC. Confidential and Proprietary. All Rights Reserved.

@@ -4,11 +4,13 @@
 
 
 //figure out how to get to use 'advanced formats'
+// var advancedFormat = require('dayjs/plugin/advancedFormat');
+dayjs.extend(dayjs_plugin_advancedFormat);
 
 //get the dayjs library
 var today = dayjs();
 var currentHour = dayjs();
-var currentHour = dayjs();
+// var currentHour = dayjs();
 
 
 
@@ -29,12 +31,13 @@ $(function () {
   // this new string is what will be saved/displayed
 
   //each <div> gets it's own key made for it and that key unlocks it's coresponding box.
-
   function setDescription(){
 
     //this is creating a key that will be assigned to each <div> 
     var hour = $(this).parent().attr("id");
+    
     // Gets the string/value within the <textarea> of the selected <div>
+        // (looks at the button's siblings these include the: <div> and <textarea>
         //this string will be saved as 'description'
     var description = $(this).siblings(".description").val();
 
@@ -45,9 +48,9 @@ $(function () {
 
       /////////////this is just for debugging////////////
     //tells me the hour the save button was clicked for ie 9am
-    console.log("click hour: "+hour);
+    console.log("click hour: "+ hour);
     //will be used to tell me the text that is in the description
-    console.log("click description: "+description);
+    console.log("click description: "+ description);
 
 
     //this just stores the data I collected into the local storage
@@ -143,5 +146,5 @@ $(function () {
   getDescription();
   
   //set the text at the top of the calender to Today ie 'Today is Tuesday, December 19'
-  $('#currentDay').text(today.format('[Today is ]dddd MMMM D'));
+  $('#currentDay').text(today.format('[Today is ]dddd MMMM Do'));
 });
